@@ -52,11 +52,8 @@ class Solver(object):
             checkpoint = torch.load(self.warmup_path)
             model_dict = checkpoint['state_dict']
             self.G.load_state_dict(model_dict)
-            current_step = checkpoint['global_step']
-            optimizer_dict = checkpoint['optimizer']
-            # print(optimizer_dict)
-            self.g_optimizer.load_state_dict(optimizer_dict)
-            # self.g_optimizer = checkpoint['optimizer']
+            current_step = checkpoint['global_step'] + 1 
+            self.g_optimizer = checkpoint['optimizer']
         
         print(f'\n【current model step is {current_step}】\n')
         self.G.to(self.device)
@@ -83,7 +80,7 @@ class Solver(object):
         # Start training.
         print('Start training...')
         start_time = time.time()
-        for i in range(self.current_step + 1, self.num_iters):
+        for i in range(self.current_step , self.num_iters):
 
             # =================================================================================== #
             #                             1. Preprocess input data                                #
@@ -157,7 +154,7 @@ class Solver(object):
                 checkpoint = {
                     'global_step' : i + 1,
                     'state_dict' :  self.G.state_dict(),
-                    'optimizer' : self.g_optimizer.state_dict()
+                    'optimizer' : self.g_optimizer
                 }
                 torch.save(checkpoint, checkpoint_file_name)
                 torch.save(checkpoint, os.path.join(self.logdir, 'model.pth'))
