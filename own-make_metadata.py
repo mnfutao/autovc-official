@@ -8,6 +8,7 @@ from collections import OrderedDict
 import numpy as np
 import torch
 from datasets.other_speech.speaker import speaker_list, speaker2idx
+from tqdm import tqdm
 
 
 num_uttrs = 10
@@ -23,7 +24,7 @@ mels_list = os.listdir(melsDirPath)
 speakerEmbeddin = np.load(speakerEmbeddingPath)
 
 results = {}
-for i in range(len(mels_list)):
+for i in tqdm(range(len(mels_list))):
     c_speaker_name = mels_list[i].strip().split('-')[0]
     if c_speaker_name not in results:
         c_speaker_id = speaker2idx[c_speaker_name]
