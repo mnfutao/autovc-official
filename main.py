@@ -1,10 +1,9 @@
 import os
 import argparse
 from solver_encoder import Solver
-# from data_loader import get_loader
 from own_data_loader import get_loader
 from torch.backends import cudnn
-
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
 def str2bool(v):
     return v.lower() in ('true')
@@ -36,13 +35,17 @@ if __name__ == '__main__':
     # Training configuration.
     #parser.add_argument('--data_dir', type=str, default='./spmel')
     parser.add_argument('--data_dir', type=str, default='./datasets/other_speech')
-    parser.add_argument('--batch_size', type=int, default=16, help='mini-batch size')
+    parser.add_argument('--batch_size', type=int, default=240, help='mini-batch size')
     parser.add_argument('--num_iters', type=int, default=1000000, help='number of total iterations')
     parser.add_argument('--len_crop', type=int, default=128, help='dataloader output sequence length')
     
     # Miscellaneous.
-    parser.add_argument('--log_step', type=int, default=10)
+    parser.add_argument('--log_step', type=int, default=100)
+    parser.add_argument('--save_step', type=int, default=2000)
+    parser.add_argument('--logdir', type=str, default='./logdir/')
+    parser.add_argument('--warmup_path', type=str, default='./logdir/model.pth')
 
     config = parser.parse_args()
     print(config)
     main(config)
+
