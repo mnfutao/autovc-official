@@ -69,11 +69,10 @@ class Solver(object):
 
             # Fetch data.
             try:
-                x_real, emb_org = next(data_iter)
+                x_real, emb_org, speakear_id, data_index = next(data_iter)
             except:
                 data_iter = iter(data_loader)
-                x_real, emb_org = next(data_iter)
-            
+                x_real, emb_org, speakear_id, data_index = next(data_iter)
             
             x_real = x_real.to(self.device) 
             emb_org = emb_org.to(self.device) 

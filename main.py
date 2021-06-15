@@ -1,7 +1,8 @@
 import os
 import argparse
 from solver_encoder import Solver
-from data_loader import get_loader
+# from data_loader import get_loader
+from own_data_loader import get_loader
 from torch.backends import cudnn
 
 
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     # Training configuration.
     #parser.add_argument('--data_dir', type=str, default='./spmel')
     parser.add_argument('--data_dir', type=str, default='./datasets/other_speech')
-    parser.add_argument('--batch_size', type=int, default=2, help='mini-batch size')
+    parser.add_argument('--batch_size', type=int, default=16, help='mini-batch size')
     parser.add_argument('--num_iters', type=int, default=1000000, help='number of total iterations')
     parser.add_argument('--len_crop', type=int, default=128, help='dataloader output sequence length')
     
